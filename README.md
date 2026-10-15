@@ -129,11 +129,30 @@ backend/src/main/resources/application.properties
 Configurez la connexion MySQL locale. Exemple de propriétés à adapter :
 
 ```properties
-spring.datasource.url=${DB_URL:jdbc:mysql://localhost:3306/terre_sana}
-spring.datasource.username=${DB_USERNAME}
-spring.datasource.password=${DB_PASSWORD}
+spring.datasource.url=jdbc:mysql://localhost:3306/terre_sana
+spring.datasource.username=root
+spring.datasource.password=
 spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
 server.port=8080
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=your-email@gmail.com
+spring.mail.password=your-gmail-app-password
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+logging.file.name=backend.log
+logging.level.org.springframework.mail=DEBUG
+logging.level.com.terresana.backend=DEBUG
+
+
+# Secrets JWT fixes (RG-24) : distincts admin / benevole, et stables entre redemarrages
+# (sinon tous les tokens deviennent invalides a chaque redemarrage du backend)
+# Generer par exemple avec : python -c "import secrets,base64; print(base64.b64encode(secrets.token_bytes(32)).decode())"
+jwt.admin.secret=
+jwt.volunteer.secret=
 ```
 
 Dans le même terminal PowerShell qui servira à démarrer le backend, définissez vos valeurs locales :
@@ -171,7 +190,7 @@ Les trois services doivent être actifs : MySQL, backend et frontend. Le backend
 
 ```powershell
 cd backend
-.\mvnw.cmd spring-boot:run
+mvn spring-boot:run
 ```
 
 Au premier lancement, le téléchargement des dépendances peut prendre quelques minutes. Le backend écoute sur `http://localhost:8080`.

@@ -1,5 +1,6 @@
 package com.terresana.backend.repository;
 
+import com.terresana.backend.model.Admin;
 import com.terresana.backend.model.AppUser;
 import com.terresana.backend.model.Event;
 import com.terresana.backend.model.Registration;
@@ -27,4 +28,6 @@ public interface RegistrationRepository extends JpaRepository<Registration, Long
 
     // Liste d'attente triée par date d'inscription (le plus ancien passe en premier)
     List<Registration> findByEventAndStatusOrderByCreatedAtAsc(Event event, RegistrationStatus status);
+
+    boolean existsByValidatedBy(Admin admin);
 }

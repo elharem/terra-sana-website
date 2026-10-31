@@ -1,5 +1,6 @@
 package com.terresana.backend.repository;
 
+import com.terresana.backend.model.Admin;
 import com.terresana.backend.model.Event;
 import com.terresana.backend.model.enums.EventStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     // Détection de doublon (même jour + même lieu, titre ignoré) demandée par l'utilisateur
     List<Event> findByEventDateBetweenAndLocationIgnoreCase(LocalDateTime start, LocalDateTime end, String location);
+
+    boolean existsByAdmin(Admin admin);
 }

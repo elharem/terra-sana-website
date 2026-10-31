@@ -75,8 +75,4 @@ public class ContactController {
         }
     }
 
-    @PutMapping("/{id}/changePassword")
-    public Map<String, String> changePassword(@PathVariable Long id, @RequestBody Map<String, String> body) {
-        return Map.of("message", "Mot de passe change");
-    }
 }
